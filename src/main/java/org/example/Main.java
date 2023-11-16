@@ -12,8 +12,10 @@ public class Main {
 
         double AverageGrade = 0.0;
         int TotalGrades = 0;
-        int studentGrade;
+        int studentGrade = 0;
         int StudentNumber = 0;
+        String letterGrade;
+
         String End = "end";
         String studentName;
 
@@ -32,7 +34,7 @@ public class Main {
             if(End.equalsIgnoreCase(studentName)){
                 if(StudentNumber > 0) {
                     AverageGrade = (double) TotalGrades / StudentNumber;
-                    System.out.println(AverageGrade);
+                    System.out.println("Average Grade is " + AverageGradeLetter(AverageGrade));
                     break;
                 }
 
@@ -42,16 +44,55 @@ public class Main {
                 }
             }
 
+            if(studentName.matches(".*\\\\d.*")){
+                System.out.println("Please enter a valid name(no digits please)");
+                continue;
+            }
+
             System.out.println("Enter the student grade:  ");
 
+
+            while(!gradeInput.hasNextInt()){
+                System.out.println("Please enter a valid grade(no words or letters please)");
+                gradeInput.next();
+            }
             studentGrade = gradeInput.nextInt();
             TotalGrades += studentGrade;
             StudentNumber++;
-
-            System.out.println("Student Name: " + studentName + " Student Grade: " + studentGrade + " Student Number: " + StudentNumber);
-
+            gradeResult(studentName, studentGrade, StudentNumber);
         }
         studentNameInput.close();
         gradeInput.close();
     }
-}
+    public static void gradeResult(String studentName, int studentGrade, int studentNumber) {
+        String letterGrade;
+        if (studentGrade >= 91) {
+            letterGrade = "A";
+        } else if (studentGrade >= 80) {
+            letterGrade = "B";
+        } else if (studentGrade >= 70) {
+            letterGrade = "C";
+        } else if (studentGrade >= 60) {
+            letterGrade = "D";
+        } else {
+            letterGrade = "F";
+        }
+        System.out.println("Student Name: " + studentName + ", Grade: " + studentGrade + ", Letter Grade: " + letterGrade + ", Student Number: " + studentNumber);
+    }
+
+    public static String AverageGradeLetter(double gradeAverage){
+        String letterGrade;
+        if (gradeAverage >= 91) {
+            letterGrade = "A";
+        } else if (gradeAverage >= 80) {
+            letterGrade = "B";
+        } else if (gradeAverage >= 70) {
+            letterGrade = "C";
+        } else if (gradeAverage >= 60) {
+            letterGrade = "D";
+        } else {
+            letterGrade = "F";
+        }
+        return letterGrade;
+    }
+    }
